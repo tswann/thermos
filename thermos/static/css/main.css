@@ -193,7 +193,7 @@ article.flashes {
     margin-bottom: 1em;
 }
 
-.error .error input {
+.error, .error input {
     color: red;
 }
 
