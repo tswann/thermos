@@ -11,8 +11,16 @@ Thermos -- Welcome
             <p>Thermos is a simple social bookingmarking site. Or actually, a sample for a pluralsight course</p>
         </header>
         <section>
-            <h2>Section 1</h2>
-            <p>Section one sample text</p>
+            <h2>Recently Added</h2>
+            {% if new_bookmarks %}
+                <ul>
+                {% for bm in new_bookmarks %}
+                    <li>{{ bm.user }} added <a href="{{bm.url}}">{{bm.description}}</a></li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                No bookmarks yet.
+            {% endif %}
         </section>
         <section>
             <h2>Section 2</h2>
