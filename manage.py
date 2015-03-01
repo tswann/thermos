@@ -8,6 +8,7 @@ manager = Manager(app)
 def initdb():
     db.create_all()
     db.session.add(User(username="tam", email="tam@example.com"))
+    db.session.add(User(username="andy", email="andy@example.com"))
     print 'Initialised the database'
 
 @manager.command
