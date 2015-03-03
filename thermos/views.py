@@ -2,6 +2,7 @@ from flask import render_template, url_for, request, redirect, flash
 from thermos import app, db
 from forms import BookmarkForm
 from models import User, Bookmark
+from flask_login import login_required
 
 def logged_in_user():
     return User.query.filter_by(username='tam').first()
@@ -12,6 +13,7 @@ def index():
     return render_template('index.html', new_bookmarks=Bookmark.newest(5))
 
 @app.route('/add', methods = ['GET', 'POST'])
+@login_required
 def add():
     form = BookmarkForm()
     if form.validate_on_submit():
