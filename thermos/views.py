@@ -1,11 +1,12 @@
 from flask import render_template, url_for, request, redirect, flash
-from thermos import app, db
+from thermos import app, db, logon_manager
 from forms import BookmarkForm, LoginForm
 from models import User, Bookmark
 from flask_login import login_required, login_user
 
-def logged_in_user():
-    return User.query.filter_by(username='tam').first()
+@logon_manager.user_loader
+def load_user(userid):
+    return User.query.get(int(userid))
 
 @app.route('/')
 @app.route('/index')
