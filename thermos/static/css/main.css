@@ -162,15 +162,15 @@ a:hover, aside a:hover, aside a:visited:hover {
 }
 
 aside a {
-    color: FFD6A3;
+    color: #FFD6A3;
 }
 
 aside a:hover {
-    color: FFD6A3;
+    color: #FFD6A3;
 }
 
 aside a:visited {
-    color: D39447;
+    color: #D39447;
 }
 
 h1, h2, h3, h4, h5, h6 {
