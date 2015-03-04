@@ -1,3 +1,5 @@
+__author__ = 'thomassw'
+
 from flask_wtf import Form
 from wtforms.fields import StringField
 from wtforms.validators import URL, Regexp
