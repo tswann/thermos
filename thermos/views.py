@@ -1,8 +1,8 @@
 from flask import render_template, url_for, request, redirect, flash, abort
 from thermos import app, db, login_manager
-from forms import BookmarkForm, LoginForm, SignupForm
+from forms import BookmarkForm
 from models import User, Bookmark, Tag
-from flask_login import login_required, login_user, logout_user, current_user
+from flask_login import login_required, current_user
 
 
 @login_manager.user_loader
@@ -30,7 +30,7 @@ def add():
         flash("Stored '{}'".format(description))
         return redirect(url_for('index'))
 
-    return render_template('add.html', form=form)
+    return render_template('bookmark_form.html', form=form, title='Add bookmark')
 
 
 @app.route('/edit/<int:bookmark_id>', methods=['GET', 'POST'])
@@ -72,41 +72,6 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('user.html', user=user)
 
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        # login and validate the user
-        user = User.query.filter_by(username=form.username.data).first()
-        if user is not None and user.check_password(form.password.data):
-            login_user(user, form.remember_me)
-            flash("Logged in as {}".format(user.username))
-            return redirect(request.args.get('next') or url_for('user', username=user.username))
-        flash('Incorrect username or password.')
-
-    return render_template("login.html", form=form)
-
-
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    form = SignupForm()
-    if form.validate_on_submit():
-        user = User(email=form.email.data,
-                    username=form.username.data,
-                    password=form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash('Welcome, {}! Please login.'.format(user.username))
-        return redirect(url_for('login'))
-
-    return render_template("signup.html", form=form)
-
-
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
 
 @app.route('/tag/<name>')
 def tag(name):
