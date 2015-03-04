@@ -37,10 +37,6 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
     @staticmethod
-    def get_by_id(id):
-        return User.query.get(int(id))
-
-    @staticmethod
     def get_by_username(username):
         return User.query.filter_by(username=username).first()
 
