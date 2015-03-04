@@ -1,10 +1,10 @@
 from flask import render_template, url_for, request, redirect, flash
-from thermos import app, db, logon_manager
+from thermos import app, db, login_manager
 from forms import BookmarkForm, LoginForm
 from models import User, Bookmark
 from flask_login import login_required, login_user
 
-@logon_manager.user_loader
+@login_manager.user_loader
 def load_user(userid):
     return User.query.get(int(userid))
 
