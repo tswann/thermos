@@ -2,11 +2,11 @@ from flask import render_template, url_for, request, redirect, flash
 from thermos import app, db, login_manager
 from forms import BookmarkForm, LoginForm
 from models import User, Bookmark
-from flask_login import login_required, login_user
+from flask_login import login_required, login_user, logout_user, current_user
 
 @login_manager.user_loader
 def load_user(userid):
-    return User.query.get(int(userid))
+    return User.get_by_id(userid)
 
 @app.route('/')
 @app.route('/index')
@@ -20,7 +20,7 @@ def add():
     if form.validate_on_submit():
         url = form.url.data
         description = form.description.data
-        bm = Bookmark(user=logged_in_user(), url=url,description=description)
+        bm = Bookmark(user=current_user, url=url,description=description)
         db.session.add(bm)
         db.session.commit()
         flash("Stored '{}'".format(description))
@@ -37,13 +37,18 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         # login and validate the user
-        user = User.query.filter_by(username=form.username.data).first()
-        if user is not None:
+        user = User.get_by_username(form.username.data)
+        if user is not None and user.check_password(form.password.data):
             login_user(user, form.remember_me)
             flash("Logged in as {}".format(user.username))
-            return redirect(request.args.get('next') or url_for('index'))
+            return redirect(request.args.get('next') or url_for('user', username=user.username))
         flash('Incorrect username or password.')
     return render_template("login.html", form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.errorhandler(404)
 def page_not_found(e):
