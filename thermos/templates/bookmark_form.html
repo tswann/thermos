@@ -2,8 +2,8 @@
 {% from "form_macros.html" import render_field %}
 
 {% block styles %}
-{{ super() }}
-<link rel="styleheet" href="{{ url_for('static', filename='css/select2.css') }}">
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/select2.css') }}">
 {% endblock %}
 
 {% block title %}
@@ -35,7 +35,7 @@ Thermos -- {{ title }}
   <script src="{{ url_for('static', filename='js/vendor/select2.min.js') }}"></script>
   <script>
     $(document).ready(function() {
-      var _tags = {{ all_tags()|map(attribute='name'|list|tojson|safe) }};
+      var _tags = {{ all_tags()|map(attribute='name')|list|tojson|safe }};
 
       $('#tags').select2({ tags: _tags, tokenSeparators: [",", " "]});
     });
