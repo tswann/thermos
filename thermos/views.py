@@ -29,7 +29,7 @@ def add():
 
 @app.route('/user/<username>')
 def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
+    user = User.get_by_username(username).first_or_404()
     return render_template('user.html', user=user)
 
 @app.route('/login', methods=['GET', 'POST'])
