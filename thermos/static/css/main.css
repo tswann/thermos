@@ -161,12 +161,26 @@ a:hover, aside a:hover, aside a:visited:hover {
     color: #D39447;
 }
 
+aside a {
+    color: FFD6A3;
+}
+
+aside a:hover {
+    color: FFD6A3;
+}
+
+aside a:visited {
+    color: D39447;
+}
+
 h1, h2, h3, h4, h5, h6 {
     color: #1E5373;
 }
 
 .main aside h3,
-footer h3 {
+footer h3,
+footer a,
+footer a:visited {
     color: white;
 }
 
@@ -211,7 +225,7 @@ ul.bookmarks {
     padding-left: 0;
 }
 
-ul.bookmarks li {
+.bookmark {
     padding-bottom: .5em;
     border-top: 1px solid #7EA6BF;
     padding: 1em 0;
