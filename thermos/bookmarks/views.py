@@ -28,7 +28,7 @@ def add():
 
 @bookmarks.route('/edit/<int:bookmark_id>', methods=['GET', 'POST'])
 @login_required
-def edit_bookmark(bookmark_id):
+def edit(bookmark_id):
     bookmark = Bookmark.query.get_or_404(bookmark_id)
     if current_user != bookmark.user:
         abort(403)

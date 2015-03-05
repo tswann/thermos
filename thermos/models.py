@@ -31,6 +31,8 @@ class Bookmark(db.Model):
     def tags(self, string):
         if string:
             self._tags = [Tag.get_or_create(name) for name in string.split(',')]
+        else:
+            self._tags = []
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
